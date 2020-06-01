@@ -6,17 +6,19 @@
 
 ### Installing manually
 
+```bash
 curl -L https://raw.githubusercontent.com/yogeek/kubectl-node-rolling/master/node-rolling.sh -o kubectl-node_rolling
 chmod +x kubectl-node_rolling
 sudo mv ./kubectl-node_rolling /usr/local/bin/kubectl-node_rolling
+```
 
-## Installing with krew (NOT AVAILABLE YET)
+### Installing with krew (NOT AVAILABLE YET)
 
 - install `krew` using instructions [here](https://github.com/kubernetes-sigs/krew#installation)
 - run `kubectl krew update`
 - run `kubectl krew install node-rolling`
 
-# Usage
+## Usage
 
 - perform rolling shutdown of all nodes in a cluster
 
