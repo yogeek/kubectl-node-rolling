@@ -216,20 +216,25 @@ spec:
 EOT
   fi
 
+  echo -e "${blue}Waiting for replace job to complete on node $node...${nocolor}"
   if ! $dryrun; then
-    echo -e "${blue}Waiting for replace job to complete on node $node...${nocolor}"
     wait_for_job_completion $pod
     new_node="empty"
     wait_for_status $others
-    # wait_for_all_status $current_status 
+    # wait_for_all_status $current_status
+  else
+    echo "..."
   fi
 
   echo -e "${blue}New node $new_node is Ready ! ${nocolor}"
-  # echo -e "${blue}Uncordoning node $node${nocolor}"
   echo
-  kubectl get nodes --selector "kubernetes.io/hostname=$new_node"
-  # kubectl uncordon "$node"
-  echo
-  kubectl delete job $pod -n kube-system
-  sleep $nodesleep
+  
+  if ! $dryrun; then
+    kubectl get nodes --selector "kubernetes.io/hostname=$new_node"
+    kubectl delete job $pod -n kube-system
+    sleep $nodesleep
+  else
+    echo "kubectl delete job $pod -n kube-system"
+    echo "sleep $nodesleep"
+  fi
 done
