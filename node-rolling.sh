@@ -141,10 +141,15 @@ function wait_for_status() {
   fi
 }
 
+if [ "$allnodes" == "true" ] && [ ! -z "$selector" ]; then
+  echo "'all' and '--selector' ('-l') options are incompatible. Please choose one or the other."
+  exit 1
+fi
+
 if [ "$allnodes" == "true" ]; then
   nodes=$(kubectl get nodes -o jsonpath='{.items[*].metadata.name}')
   # Get current status (will be compared to the final status to check if the cluster is back to normal)
-  current_status=$(kubectl get nodes --selector='!node-role.kubernetes.io/master' -o "jsonpath={.items[*].status.conditions[?(.reason==\"KubeletReady\")].type}" 2>/dev/null)
+  # current_status=$(kubectl get nodes --selector='!node-role.kubernetes.io/master' -o "jsonpath={.items[*].status.conditions[?(.reason==\"KubeletReady\")].type}" 2>/dev/null)
   echo -e "${blue}Targeting nodes:${nocolor}"
   for node in $nodes; do
     echo " $node"
@@ -152,7 +157,7 @@ if [ "$allnodes" == "true" ]; then
 elif [ ! -z "$selector" ]; then
   nodes=$(kubectl get nodes --selector=$selector -o jsonpath={.items[*].metadata.name})
   # Get current status (will be compared to the final status to check if the cluster is back to normal)
-  current_status=$(kubectl get nodes --selector=$selector -o "jsonpath={.items[*].status.conditions[?(.reason==\"KubeletReady\")].type}" 2>/dev/null)
+  # current_status=$(kubectl get nodes --selector=$selector -o "jsonpath={.items[*].status.conditions[?(.reason==\"KubeletReady\")].type}" 2>/dev/null)
   echo -e "${blue}Targeting nodes:${nocolor}"
   for node in $nodes; do
     echo " $node"
