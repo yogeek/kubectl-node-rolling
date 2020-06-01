@@ -1,45 +1,42 @@
-# kubectl-node-restart
+# kubectl-node-rolling
 
-`kubectl-node-restart` is a [kubectl plugin](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/) that sequentially and gracefully performs a rolling restart of Nodes within a Kubernetes cluster
+`kubectl-node-rolling` is a [kubectl plugin](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/) that sequentially and gracefully performs a rolling shutdown of Nodes within a Kubernetes cluster in the context where nodes are managed by an auto-scaling group.
 
-![using kubectl-node-restart plugin](demo/usage.gif)
+![using kubectl-node-rolling plugin](demo/usage.gif)
 
 # Installing
 - install `krew` using instructions [here](https://github.com/kubernetes-sigs/krew#installation)
 - run `kubectl krew update`
-- run `kubectl krew install node-restart`
-
-![installing kubectl-node-restart plugin](demo/installation.gif)
-
+- run `kubectl krew install node-rolling`
 
 # Usage
 
-- perform rolling restart of all nodes in a cluster
+- perform rolling shutdown of all nodes in a cluster
 
 ```bash
-    kubectl node-restart all
+    kubectl node-rolling all
 ```
 
-- restart only specific nodes selected through labels
+- shutdown only specific nodes selected through labels
 
 ```bash
-    kubectl node-restart --selector node-role.kubernetes.io/master
+    kubectl node-rolling --selector node-role.kubernetes.io/master
 ```
 
 - perform a dry-run
 
 ```bash
-    kubectl node-restart all --dry-run
+    kubectl node-rolling all --dry-run
 ```
 
-- restart node(s) without first draining
+- rolling node(s) without first draining
 
 ```bash
-    kubectl node-restart all --force
+    kubectl node-rolling all --force
 ```
 
-- add a delay of 120seconds between node restarts
+- add a delay of 120seconds between node rollings
 
 ```bash
-    kubectl node-restart all --sleep 120
+    kubectl node-rolling all --sleep 120
 ```
