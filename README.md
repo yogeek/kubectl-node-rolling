@@ -2,6 +2,8 @@
 
 `kubectl-node-rolling` is a [kubectl plugin](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/) that sequentially and gracefully performs a rolling shutdown of Nodes within a Kubernetes cluster in the context where nodes are managed by an auto-scaling group.
 
+Adapted from [kubectl-node-restart](https://github.com/MnrGreg/kubectl-node-restart) plugin.
+
 ## Installation
 
 ### Installing manually
