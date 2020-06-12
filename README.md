@@ -1,8 +1,12 @@
 # kubectl-node-rolling
 
-`kubectl-node-rolling` is a [kubectl plugin](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/) that sequentially and gracefully performs a rolling shutdown of Nodes within a Kubernetes cluster in the context where nodes are managed by an auto-scaling group.
+`kubectl-node-rolling` is a [kubectl plugin](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/) that sequentially and gracefully performs a shutdown of Nodes within a Kubernetes cluster.
 
-Adapted from [kubectl-node-restart](https://github.com/MnrGreg/kubectl-node-restart) plugin.
+This plugin was adapted from [kubectl-node-restart](https://github.com/MnrGreg/kubectl-node-restart) plugin.
+
+**Goal** : In a context where nodes are managed by cloud auto-scaling group, restarting nodes is not sufficient to do a rolling-upgrade.
+When creating a K8S cluster based on immutable AMIs for example, we would like to be able to update the nodes when the AMI has been changed in the ASG Launch Template. To do this, nodes have to be terminated to be replaced by a newer node by the ASG.
+As this plugin shutdowns a node at a time, this node is (after a "healthcheck" delay) seen by the ASG as "Unhealthy", so the ASG terminates the node and starts a new one based on the last Launch Template. Once the node is ready in K8S, it continues with the next node. 
 
 ## Installation
 
