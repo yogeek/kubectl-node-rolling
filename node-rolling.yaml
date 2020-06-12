@@ -9,10 +9,12 @@ spec:
       matchExpressions:
       - {key: os, operator: In, values: [darwin, linux]}
     uri: https://github.com/yogeek/kubectl-node-rolling/releases/download/v1.0.0/v1.0.0.zip
-    sha256: "add1a4e9ce70d820da29641db05abddd55cdfa84a0da3b36b99f1b1b66775b5d"
+    sha256: "9e9e22724016724765419354509f9238f34ec1f7bb6dc9eeb55af248a559bf93"
     files:
     - from: "*.sh"
       to:  "."
+    - from: "LICENSE"
+      to: "."
     bin: "node-rolling.sh"
   shortDescription: >-
     Shutdown cluster nodes sequentially & gracefully
