@@ -1,28 +1,27 @@
 apiVersion: krew.googlecontainertools.github.com/v1alpha2
 kind: Plugin
 metadata:
-  name: node-restart
+  name: node-rolling
 spec:
   version: "v1.0.0"
   platforms:
   - selector:
       matchExpressions:
       - {key: os, operator: In, values: [darwin, linux]}
-    uri: https://github.com/MnrGreg/kubectl-node-restart/releases/download/v1.0.0/v1.0.0.zip
-    sha256: "44db0eee9603085652837d26c5352287864f158b557f78ae19325724640535f8"
+    uri: https://github.com/yogeek/kubectl-node-rolling/releases/download/v1.0.0/v1.0.0.zip
+    sha256: "add1a4e9ce70d820da29641db05abddd55cdfa84a0da3b36b99f1b1b66775b5d"
     files:
     - from: "*.sh"
       to:  "."
-    - from: "LICENSE"
-      to: "."
-    bin: "node-restart.sh"
+    bin: "node-rolling.sh"
   shortDescription: >-
-    Restart cluster nodes sequentially & gracefully
-  homepage: https://github.com/mnrgreg/kubectl-node-restart
+    Shutdown cluster nodes sequentially & gracefully
+  homepage: https://github.com/yogeek/kubectl-node-rolling
   caveats: |
     Execution of this plugin requires Kubernetes cluster-admin Rolebindings
     and the ability to schedule Privileged Pods.
   description: |
-    This plugin performs a sequential, rolling restart of selected nodes by first
-    draining each node, then running a Kubernetes Job to reboot each node, and
-    finally uncordoning each node when Ready. 
+    This plugin performs a sequential, rolling shutdown of selected nodes by first
+    draining each node, then running a Kubernetes Job to shutdown each node, and
+    finally waiting for the node to be replaced by a new one 
+    by an external component (like an AutoScaling Group). 
